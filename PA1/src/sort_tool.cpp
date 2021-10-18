@@ -7,6 +7,7 @@
 
 #include "sort_tool.h"
 #include<iostream>
+#include <limits>
 
 // Constructor
 SortTool::SortTool() {}
@@ -71,12 +72,43 @@ void SortTool::MergeSortSubVector(vector<int>& data, int low, int high) {
     // TODO : Please complete MergeSortSubVector code here
     // Hint : recursively call itself
     //        Merge function is needed
+    if (low < high) {
+        int mid = (low + high)/2;
+        MergeSortSubVector(data, low, mid);
+        MergeSortSubVector(data, mid+1, high);
+        Merge(data, low, mid, mid+1, high);
+    }
 }
 
 // Merge
 void SortTool::Merge(vector<int>& data, int low, int middle1, int middle2, int high) {
     // Function : Merge two sorted subvector
     // TODO : Please complete the function
+    int n1 = middle1 - low + 1;
+    int n2 = high - middle2 + 1;
+    vector<int> left(n1+1);
+    vector<int> right(n2+1);
+
+    for (int i=0; i<n1; i++){
+        left[i] = data[low+i];
+    }
+    for (int i=0; i<n2; i++){
+        right[i] = data[middle2+i];
+    }
+    left[n1] = std::numeric_limits<int>::max();
+    right[n2] = std::numeric_limits<int>::max();
+
+    int i = 0;
+    int j = 0;
+    for (int k=low; k<high+1; k++){
+        if (left[i]<=right[j]){
+            data[k] = left[i];
+            i++;
+        } else {
+            data[k] = right[j];
+            j++;
+        }
+    }
 }
 
 // Heap sort method
