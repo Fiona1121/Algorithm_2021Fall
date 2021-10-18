@@ -15,6 +15,16 @@ SortTool::SortTool() {}
 void SortTool::InsertionSort(vector<int>& data) {
     // Function : Insertion sort
     // TODO : Please complete insertion sort code here
+    for (int i=1; i<data.size(); i++) {
+        int key = data[i];
+        int j = i-1;
+        while (j>=0 && data[j]>key){
+            data[j+1] = data[j];
+            j--;
+        }
+        data[j+1] = key;
+    }
+
 }
 
 // Quick sort method
