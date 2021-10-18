@@ -37,12 +37,27 @@ void SortTool::QuickSortSubVector(vector<int>& data, int low, int high) {
     // TODO : Please complete QuickSortSubVector code here
     // Hint : recursively call itself
     //        Partition function is needed
+    if (low < high) {
+        int q = Partition(data, low, high);
+        QuickSortSubVector(data, low, q-1);
+        QuickSortSubVector(data, q+1, high);
+    }
 }
 
 int SortTool::Partition(vector<int>& data, int low, int high) {
     // Function : Partition the vector 
     // TODO : Please complete the function
     // Hint : Textbook page 171
+    int pivot = data[high];
+    int i = low-1;
+    for (int j=low; j<(high); j++){
+        if (data[j] <= pivot){
+            i++;
+            data[i], data[j] = data[j], data[i];
+        }
+        data[i+1], data[high] = data[high], data[i+1];
+    }
+    return i+1;
 }
 
 // Merge sort method
