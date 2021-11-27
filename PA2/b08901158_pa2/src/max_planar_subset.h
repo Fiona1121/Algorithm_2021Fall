@@ -9,10 +9,13 @@
 #define _MPS_H
 
 #include <vector>
-#include <map>
+#include <fstream>
 using namespace std;
 
-int max_planar_subset(map<int,int>& chords, vector<vector<int>>& M, vector<vector<bool>>& C, int i, int j);
-void get_subset(map<int,int>& chords, vector<vector<bool>>& C, vector<vector<int>>& S, int i, int j);
-
+int max_planar_subset(vector<int>& chords, vector<vector<int>>& M, int i, int j);
+void get_subset(vector<int>& chords, vector<vector<int>>& M, fstream& fout, int i, int j);
+int max_planar_subset2(vector<int>& chords, vector<int>& M, int i, int j, int n_vertices);
+void get_subset2(vector<int>& chords, vector<int>& M, fstream& fout, int i, int j, int n_vertices);
+int max_planar_subset3(vector<int>& chords, int**& M, int i, int j);
+void get_subset3(vector<int>& chords, int**& M, fstream& fout, int i, int j);
 #endif

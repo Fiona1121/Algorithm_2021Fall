@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <time.h>
 #include "max_planar_subset.h"
 
 using namespace std;
@@ -20,7 +21,11 @@ int main(int argc, char* argv[]) {
        help_message();
        return 0;
     }
-    
+    clock_t clkStart;
+    clock_t clkFinish;
+
+    clkStart = clock();
+
     // read the input file
     fstream fin(argv[1]);
     fstream fout;
@@ -28,27 +33,40 @@ int main(int argc, char* argv[]) {
     int n_vertices, n_chords, i, j;
     fin >> n_vertices;
     n_chords = n_vertices / 2;
-    map<int, int> chords_map;
+    vector<int> chords(n_vertices);
     for (int k=0; k<n_chords; k++) {
         fin >> i >> j;
-        chords_map[i] = j;
-        chords_map[j] = i;
+        chords[i] = j;
+        chords[j] = i;
     }
 
-    // finding max planar subsets
+    // solution 1
     vector<vector<int>> mps_matrix(n_vertices, vector<int>(n_vertices, -1));
-    vector<vector<bool>> bool_matrix(n_vertices, vector<bool>(n_vertices, 0));
-
-    int n = max_planar_subset(chords_map, mps_matrix, bool_matrix, 0, n_vertices-1);
-    vector<vector<int>> subset;
-    get_subset(chords_map, bool_matrix, subset, 0, n_vertices-1);
-
-    // write the output file
+    int n = max_planar_subset(chords, mps_matrix, 0, n_vertices-1);
+    cout << "max_planar_subset() finished: time=" << (clock()-clkStart)/1000000 << endl;
     fout << n << endl;
-    for (int i = 0; i < subset.size(); i++)
-        fout << subset[i][0] << " " << subset[i][1] << endl;
+    get_subset(chords, mps_matrix, fout, 0, n_vertices-1);
+
+    // solution 2: 1d vector(過大的測資不能用qq)
+    // vector<int> mps_vector(n_vertices*(1+n_vertices)/2, -1);
+    // int n = max_planar_subset2(chords, mps_vector, 0, n_vertices-1, n_vertices);
+    // fout << n << endl;
+    // get_subset2(chords, mps_vector, fout, 0, n_vertices-1, n_vertices);
+
+    // solution 3: triangular(space減半，但會比較慢)
+    // int **mps_matrix;
+    // mps_matrix = new int * [n_vertices];
+    // for (int i = 0; i < n_vertices; i++) {
+    //     mps_matrix[i] = new int[n_vertices-i];
+    // }
+    // int n = max_planar_subset3(chords, mps_matrix, 0, n_vertices-1);
+    // fout << n << endl;
+    // get_subset3(chords, mps_matrix, fout, 0, n_vertices-1);
+
     fin.close();
     fout.close();
+    clkFinish = clock();
+    cout << "Running time: " << (clkFinish - clkStart) / 1000000 << endl;
 
     return 0;
 }
