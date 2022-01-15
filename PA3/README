@@ -1,0 +1,37 @@
+========================================
+This is README file for Algorithm PA#3
+Author: B08901158 吳詩昀
+Date: 2022/01/14
+========================================
+
+SYNOPSIS:
+
+    ./cb <input_file_name> <output_file_name>
+
+======
+
+DIRECTORY:
+
+    bin/ executable binary
+    doc/ reports
+    inputs/ input data (all connecting chords)
+    outputs/ output result (number of max planar subset and a list of the two endpoints for each resulting chord)
+    src/ source C++ codes
+    makefile
+
+======
+
+HOW TO COMPILE:
+
+    make
+
+======
+
+HOW TO RUN:
+
+    cd bin/
+    ./cb <input_file_name> <output_file_name>
+
+======
+
+OTHER NOTICE:
