@@ -104,6 +104,7 @@ void CycleRemoval::Merge(int low, int middle1, int middle2, int high)
 
 void CycleRemoval::RemoveByDFS()
 {
+    // cout << "Remove by DFS" << endl;
     vector<int> discovered(n_vertices, 0);
     vector<int> finished(n_vertices, 0);
     vector<int> P(n_vertices, -1);
@@ -168,6 +169,7 @@ void CycleRemoval::DFSVisit(int s, vector<int> &P, vector<int> &discovered, vect
 
 bool CycleRemoval::CheckCycle()
 {
+    // cout << "Check Cycle" << endl;
     vector<int> color(n_vertices, 0);
     for (int i = 0; i < n_vertices; i++)
     {
@@ -177,11 +179,13 @@ bool CycleRemoval::CheckCycle()
                 return true;
         }
     }
+    // cout << "Finish" << endl;
     return false;
 }
 
 bool CycleRemoval::CheckCycleVisit(int s, vector<int> &color)
 {
+    // cout << "Check Cycle Visit" << endl;
     color[s] = 1;
     for (int i = 0; i < n_vertices; i++)
     {
@@ -201,6 +205,7 @@ bool CycleRemoval::CheckCycleVisit(int s, vector<int> &color)
 }
 void CycleRemoval::CheckConnected()
 {
+    // cout << "Check Connected" << endl;
     vector<bool> vis(n_vertices, false);
     CheckConnectedVisit(0, vis);
     for (int i = 1; i < n_vertices; i++)
@@ -212,6 +217,7 @@ void CycleRemoval::CheckConnected()
 
 bool CycleRemoval::CheckConnectedForRemoval(int i, int j)
 {
+    // cout << "Check Connected for removal" << endl;
     int w = graph[i][j];
     graph[i][j] = 200;
     vector<bool> vis(n_vertices, false);
@@ -237,7 +243,8 @@ void CycleRemoval::CheckConnectedVisit(int s, vector<bool> &visit)
 
 void CycleRemoval::RemoveRedundant()
 {
-    MergeSortEdge(0, n_edges - 1);
+    // cout << "start redundant" << endl;
+    MergeSortEdge(0, n_edges-1);
     for (int i = 0; i < n_edges; i++)
     {
         if (graph[edges[n_edges - i - 1][0]][edges[n_edges - i - 1][1]] < 0 && CheckConnectedForRemoval(edges[n_edges - i - 1][0], edges[n_edges - i - 1][1]))
